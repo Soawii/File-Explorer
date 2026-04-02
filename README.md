@@ -3,7 +3,7 @@ A simple cross-platform file explorer with searching, sorting, file creation and
 Uses my own GUI library that uses SFML.
 
 ## Example
-![](https://i.imgur.com/6sFDg0P.gif)
+![](https://i.imgur.com/zb4OYYG.gif)
 
 ## Download
 Download a .zip in releases, run the .exe in the bin folder.
