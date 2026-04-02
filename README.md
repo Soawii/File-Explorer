@@ -1,6 +1,7 @@
 # File Explorer
-A simple cross-platform file explorer with searching, sorting, file creation and renaming.
-Uses my own GUI library that uses SFML.
+A simple cross-platform file explorer with searching, sorting, file creation and renaming. 
+
+Uses my own GUI library built with SFML.
 
 ## Example
 ![](https://i.imgur.com/zb4OYYG.gif)
