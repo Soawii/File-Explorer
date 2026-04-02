@@ -22,36 +22,28 @@ LRESULT CALLBACK CustomWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
 
     return CallWindowProc(g_originalWndProc, hwnd, msg, wParam, lParam);
 }
+#endif
 
 void setWindowSizeLimits(sf::Window& window, int minW, int minH, int maxW, int maxH)
 {
-    g_minWidth  = minW;
-    g_minHeight = minH;
-    g_maxWidth  = maxW;
-    g_maxHeight = maxH;
-
-    HWND hwnd = window.getSystemHandle();
-
-    g_originalWndProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)CustomWndProc);
+    #ifdef _WIN32
+        g_minWidth  = minW;
+        g_minHeight = minH;
+        g_maxWidth  = maxW;
+        g_maxHeight = maxH;
+        HWND hwnd = window.getSystemHandle();
+        g_originalWndProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)CustomWndProc);
+    #elif defined(__linux__)
+        Display* display = XOpenDisplay(nullptr);
+        if (!display) return;
+        Window handle = window.getSystemHandle();
+        XSizeHints hints = {};
+        hints.flags = PMinSize | PMaxSize;
+        hints.min_width = minW;
+        hints.min_height = minH;
+        hints.max_width = maxW;
+        hints.max_height = maxH;
+        XSetWMNormalHints(display, handle, &hints);
+        XCloseDisplay(display);
+    #endif
 }
-#endif
-
-#ifdef __linux__
-void setWindowSizeLimits(sf::Window& window, int minW, int minH, int maxW, int maxH)
-{
-    Display* display = XOpenDisplay(nullptr);
-    if (!display) return;
-
-    Window handle = window.getSystemHandle();
-
-    XSizeHints hints = {};
-    hints.flags = PMinSize | PMaxSize;
-    hints.min_width = minW;
-    hints.min_height = minH;
-    hints.max_width = maxW;
-    hints.max_height = maxH;
-
-    XSetWMNormalHints(display, handle, &hints);
-    XCloseDisplay(display);
-}
-#endif
