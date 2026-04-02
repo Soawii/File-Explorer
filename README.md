@@ -1,5 +1,6 @@
 # File Explorer
 A simple cross-platform file explorer with searching, sorting, file creation and renaming.
+Uses my own GUI library that uses SFML.
 
 ## Download
 Download a .zip in releases, run the .exe in the bin folder.
